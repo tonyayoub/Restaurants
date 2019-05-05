@@ -18,13 +18,13 @@ struct SortingValues: Codable {
     var minCost: Int = 0
 }
 
-enum SortingCriteria {
-    case bestMatch
-    case newest
-    case ratingAverage
-    case distance
-    case popularity
-    case averageProductPrice
-    case deliveryCosts
-    case minCost
+enum SortingCriteria: String, CaseIterable {
+    case bestMatch = "Match"
+    case newest = "Newest"
+    case ratingAverage = "Rating"
+    case distance = "Distance"
+    case popularity = "Popularity"
+    case averageProductPrice = "Price"
+    case deliveryCosts = "Delivery"
+    case minCost = "Min Cost"
 }

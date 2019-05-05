@@ -11,9 +11,9 @@ import UIKit
 class ListTableViewController: UITableViewController {
 
     let vm = RestaurantsVM()
-    var searchResults = [Restaurant]()
-    var detailViewController: RestaurantDetailsViewController? = nil
+    
     var searchController: RestaurantsSearchController!
+    
     var searchActive: Bool {
         guard let searchText = searchController.searchBar.text else {
             return false
@@ -24,10 +24,6 @@ class ListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.vm.parseRestaurants()
-        if let split = splitViewController {
-            let controllers = split.viewControllers
-            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? RestaurantDetailsViewController
-        }
         setup()
         searchController.searchResultsUpdater = self
     }
@@ -51,10 +47,17 @@ class ListTableViewController: UITableViewController {
     
     func setup() {
         setupTableView()
+
+        
+    }
+    
+    func handleSortingCriteriaChanged(newCriteria: SortingCriteria) {
+        print(newCriteria)
     }
     
     func setupTableView() {
         tableView.register(RestaurantCell.self, forCellReuseIdentifier: "Restaurant")
+        tableView.reloadData()
     }
 
 
@@ -81,14 +84,14 @@ class ListTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchActive ? searchResults.count : vm.restaurants.count
+        return vm.displayedResults.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Restaurant", for: indexPath) as! RestaurantCell
         cell.makeFavourite.tag = indexPath.row
         cell.makeFavourite.addTarget(self, action: #selector(makeFavourite(_:)), for: .touchUpInside)
-        let restaurant = searchActive ? searchResults[indexPath.row] : vm.restaurants[indexPath.row]
+        let restaurant = vm.displayedResults[indexPath.row]
   
         cell.textLabel!.text = restaurant.name
         return cell
@@ -101,21 +104,18 @@ class ListTableViewController: UITableViewController {
 
 extension ListTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
+        
         if let searchText = searchController.searchBar.text {
             filterContent(for: searchText)
             tableView.reloadData()
         }
     }
-    
     func filterContent(for searchString: String) {
         if !searchActive {
-            searchResults = vm.restaurants
+            vm.resetDisplayedResults()
         }
         else {
-            searchResults = vm.restaurants.filter({ (restaurant) -> Bool in
-                let match = restaurant.name.range(of: searchString, options: .caseInsensitive)
-                return match != nil
-            })
+            vm.updateDisplayedResultsWithSearchString(search: searchString)
         }
     }
 }

@@ -7,21 +7,27 @@
 //
 
 import UIKit
+import RxSwift
 
-class TableContainerViewController: UIViewController {
+class ContainerViewController: UIViewController {
 
     // MARK: - Search
     let searchController = RestaurantsSearchController(searchResultsController: nil)
     var lastSearchedText = ""
-  
+    var sortCriteriaSubject = BehaviorSubject(value: SortingCriteria.bestMatch)
+    let bag = DisposeBag()
+    
     @IBOutlet weak var sortingCriteriaSegment: UISegmentedControl!
     
     @IBAction func sortingCriteriaSelected(_ sender: UISegmentedControl) {
-        print(sender.selectedSegmentIndex)
+        let cases = SortingCriteria.allCases
+        let selectedIndex = sender.selectedSegmentIndex
+        sortCriteriaSubject.onNext(cases[selectedIndex])
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
+        setupSortingCriteria()
     }
     
     func setupSearchController() {
@@ -29,11 +35,23 @@ class TableContainerViewController: UIViewController {
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.delegate = self
     }
+    
+    func setupSortingCriteria() {
+        sortingCriteriaSegment.removeAllSegments()
+        var index = 0
+        for criteria in SortingCriteria.allCases {
+            sortingCriteriaSegment.insertSegment(withTitle: criteria.rawValue, at: index, animated: false)
+            index += 1
+        }
+    }
 
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? ListTableViewController {
             vc.searchController = searchController
+            sortCriteriaSubject.subscribe(onNext: { (next) in
+                vc.handleSortingCriteriaChanged(newCriteria: next)
+            }).disposed(by: bag)
         }
     }
     
@@ -43,7 +61,7 @@ class TableContainerViewController: UIViewController {
 
 }
 
-extension TableContainerViewController: UISearchBarDelegate {
+extension ContainerViewController: UISearchBarDelegate {
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         print("end editing")
         searchController.searchBar.text = lastSearchedText

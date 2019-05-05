@@ -17,8 +17,7 @@
 		F8BD29E8227ECF910021F944 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BD29E6227ECF910021F944 /* Restaurant.swift */; };
 		F8BD29E9227ECF910021F944 /* SortingValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BD29E7227ECF910021F944 /* SortingValues.swift */; };
 		F8BD29F1227ECFC10021F944 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BD29ED227ECFC10021F944 /* ListTableViewController.swift */; };
-		F8BD29F2227ECFC10021F944 /* RestaurantDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BD29EE227ECFC10021F944 /* RestaurantDetailsViewController.swift */; };
-		F8BD29F3227ECFC10021F944 /* TableContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BD29EF227ECFC10021F944 /* TableContainerViewController.swift */; };
+		F8BD29F3227ECFC10021F944 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BD29EF227ECFC10021F944 /* ContainerViewController.swift */; };
 		F8BD29F4227ECFC10021F944 /* RestaurantsSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BD29F0227ECFC10021F944 /* RestaurantsSearchController.swift */; };
 		F8BD29FA227ED08A0021F944 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BD29F6227ED0890021F944 /* Errors.swift */; };
 		F8BD29FB227ED08A0021F944 /* RestaurantsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BD29F7227ED08A0021F944 /* RestaurantsVM.swift */; };
@@ -59,8 +58,7 @@
 		F8BD29E6227ECF910021F944 /* Restaurant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		F8BD29E7227ECF910021F944 /* SortingValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortingValues.swift; sourceTree = "<group>"; };
 		F8BD29ED227ECFC10021F944 /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
-		F8BD29EE227ECFC10021F944 /* RestaurantDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantDetailsViewController.swift; sourceTree = "<group>"; };
-		F8BD29EF227ECFC10021F944 /* TableContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableContainerViewController.swift; sourceTree = "<group>"; };
+		F8BD29EF227ECFC10021F944 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		F8BD29F0227ECFC10021F944 /* RestaurantsSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantsSearchController.swift; sourceTree = "<group>"; };
 		F8BD29F6227ED0890021F944 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		F8BD29F7227ED08A0021F944 /* RestaurantsVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantsVM.swift; sourceTree = "<group>"; };
@@ -181,9 +179,8 @@
 			isa = PBXGroup;
 			children = (
 				F8BD29ED227ECFC10021F944 /* ListTableViewController.swift */,
-				F8BD29EE227ECFC10021F944 /* RestaurantDetailsViewController.swift */,
 				F8BD29F0227ECFC10021F944 /* RestaurantsSearchController.swift */,
-				F8BD29EF227ECFC10021F944 /* TableContainerViewController.swift */,
+				F8BD29EF227ECFC10021F944 /* ContainerViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -411,12 +408,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8BD29FF227ED23B0021F944 /* RestaurantCell.swift in Sources */,
-				F8BD29F2227ECFC10021F944 /* RestaurantDetailsViewController.swift in Sources */,
 				F8BD29FD227ED08A0021F944 /* Parser.swift in Sources */,
 				F8BD29E9227ECF910021F944 /* SortingValues.swift in Sources */,
 				F8BD29C8227ECF6B0021F944 /* ViewController.swift in Sources */,
 				F8BD29FB227ED08A0021F944 /* RestaurantsVM.swift in Sources */,
-				F8BD29F3227ECFC10021F944 /* TableContainerViewController.swift in Sources */,
+				F8BD29F3227ECFC10021F944 /* ContainerViewController.swift in Sources */,
 				F8BD29C6227ECF6B0021F944 /* AppDelegate.swift in Sources */,
 				F8BD29F1227ECFC10021F944 /* ListTableViewController.swift in Sources */,
 				F8BD29F4227ECFC10021F944 /* RestaurantsSearchController.swift in Sources */,

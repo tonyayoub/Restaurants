@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Table Container View Controller-->
+        <!--Container View Controller-->
         <scene sceneID="Yfv-j2-YZQ">
             <objects>
-                <viewController id="SuJ-U1-veO" customClass="TableContainerViewController" customModule="Restaurants" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="SuJ-U1-veO" customClass="ContainerViewController" customModule="Restaurants" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jT3-Gm-aHR">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
