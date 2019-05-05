@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import RxSwift
 
 class ListTableViewController: UITableViewController {
 
     let vm = RestaurantsVM()
+    var sortCriteriaSubject = BehaviorSubject(value: SortingCriteria.bestMatch)
+    let bag = DisposeBag()
     
     var searchController: RestaurantsSearchController!
     
@@ -41,7 +44,16 @@ class ListTableViewController: UITableViewController {
     
     @objc
     func makeFavourite(_ sender: UIButton) {
-        print("\(sender.tag)")
+        let restName = vm.displayedResults[sender.tag].name
+        if vm.favourites.contains(restName) {
+            if let index = vm.favourites.firstIndex(of: restName) {
+                vm.favourites.remove(at: index)
+            }
+        }
+        else {
+            vm.favourites.append(restName)
+        }
+        tableView.reloadData()
     }
     
     
@@ -51,9 +63,6 @@ class ListTableViewController: UITableViewController {
         
     }
     
-    func handleSortingCriteriaChanged(newCriteria: SortingCriteria) {
-        print(newCriteria)
-    }
     
     func setupTableView() {
         tableView.register(RestaurantCell.self, forCellReuseIdentifier: "Restaurant")
@@ -91,9 +100,10 @@ class ListTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Restaurant", for: indexPath) as! RestaurantCell
         cell.makeFavourite.tag = indexPath.row
         cell.makeFavourite.addTarget(self, action: #selector(makeFavourite(_:)), for: .touchUpInside)
+        
         let restaurant = vm.displayedResults[indexPath.row]
-  
         cell.textLabel!.text = restaurant.name
+        cell.makeFavourite.isSelected = vm.favourites.contains(restaurant.name)
         return cell
     }
     
@@ -118,6 +128,17 @@ extension ListTableViewController: UISearchResultsUpdating {
             vm.updateDisplayedResultsWithSearchString(search: searchString)
         }
     }
+}
+
+extension ListTableViewController: RestaurantListSorting {
+    func handleSortingCriteriaChanged(selectedCriteria: SortingCriteria) {
+        vm.sortDisplayedResults(criteria: selectedCriteria)
+            .subscribe(onNext: { (isSorted) in
+                self.tableView.reloadData()
+            }).disposed(by: bag)
+    }
+    
+    
 }
 
 

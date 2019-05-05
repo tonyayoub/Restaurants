@@ -14,20 +14,26 @@ class ContainerViewController: UIViewController {
     // MARK: - Search
     let searchController = RestaurantsSearchController(searchResultsController: nil)
     var lastSearchedText = ""
-    var sortCriteriaSubject = BehaviorSubject(value: SortingCriteria.bestMatch)
-    let bag = DisposeBag()
+
     
     @IBOutlet weak var sortingCriteriaSegment: UISegmentedControl!
     
     @IBAction func sortingCriteriaSelected(_ sender: UISegmentedControl) {
-        let cases = SortingCriteria.allCases
-        let selectedIndex = sender.selectedSegmentIndex
-        sortCriteriaSubject.onNext(cases[selectedIndex])
+        if let listTableVC = self.children.first as? RestaurantListSorting {
+            let cases = SortingCriteria.allCases
+            let selectedIndex = sender.selectedSegmentIndex
+            listTableVC.handleSortingCriteriaChanged(selectedCriteria: cases[selectedIndex])
+        }
+
+    }
+    
+    override func loadView() {
+        super.loadView()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
-        setupSortingCriteria()
+        setupSortingCriteriaSegment()
     }
     
     func setupSearchController() {
@@ -36,7 +42,7 @@ class ContainerViewController: UIViewController {
         searchController.searchBar.delegate = self
     }
     
-    func setupSortingCriteria() {
+    func setupSortingCriteriaSegment() {
         sortingCriteriaSegment.removeAllSegments()
         var index = 0
         for criteria in SortingCriteria.allCases {
@@ -49,9 +55,6 @@ class ContainerViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? ListTableViewController {
             vc.searchController = searchController
-            sortCriteriaSubject.subscribe(onNext: { (next) in
-                vc.handleSortingCriteriaChanged(newCriteria: next)
-            }).disposed(by: bag)
         }
     }
     

@@ -12,7 +12,6 @@ import RxSwift
 
 class RestaurantsVM {
     var bag = DisposeBag()
-    
     private var restaurants = [Restaurant]()
     private var filteredResults = [Restaurant]()
     var searchString = ""
@@ -20,6 +19,9 @@ class RestaurantsVM {
     var displayedResults: [Restaurant] {
         return filteredResults
     }
+    var favourites = [String]()
+    
+
     func  parseRestaurants(){
         let parser = Parser()
         let event = parser.readJSONFromFile(fileName: "restaurants")
@@ -28,13 +30,12 @@ class RestaurantsVM {
             print(parser.status)
             self.restaurants = result
             self.filteredResults = result
-            self.sortDisplayedResults(criteria: .averageProductPrice)
         }) { (error) in
             print("error parsing file")
             print(parser.status)
             }.disposed(by: bag)
     }
-    
+
     func changeIsFavourite(restaurant: inout Restaurant, makeIt isFavourite: Bool) {
         restaurant.favourite = isFavourite
     }
@@ -49,11 +50,22 @@ class RestaurantsVM {
             return match != nil
         })
     }
+
     
-    func sortDisplayedResults(criteria: SortingCriteria) {
+    
+    
+    func sortDisplayedResults(criteria: SortingCriteria) -> Observable<Bool> {
         let sortedResults = filteredResults.sorted { (rest1, rest2) -> Bool in
             return rest1.name < rest2.name
         }
         filteredResults = sortedResults
+        
+        let observable = Observable<Bool>.create { observer in
+            print("sorting done")
+            observer.onNext(true)
+            return Disposables.create()
+        }
+        
+        return observable
     }
 }

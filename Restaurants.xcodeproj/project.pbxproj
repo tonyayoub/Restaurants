@@ -27,6 +27,7 @@
 		F8BD2A04227ED4C80021F944 /* ParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BD2A01227ED4C80021F944 /* ParserTests.swift */; };
 		F8BD2A06227ED4F20021F944 /* all.json in Resources */ = {isa = PBXBuildFile; fileRef = F8BD2A00227ED4C80021F944 /* all.json */; };
 		F8BD2A07227ED4F70021F944 /* notValid.json in Resources */ = {isa = PBXBuildFile; fileRef = F8BD2A02227ED4C80021F944 /* notValid.json */; };
+		F8BD2A09227F0CB10021F944 /* RestaurantListSorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BD2A08227F0CB10021F944 /* RestaurantListSorting.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		F8BD2A00227ED4C80021F944 /* all.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = all.json; sourceTree = "<group>"; };
 		F8BD2A01227ED4C80021F944 /* ParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParserTests.swift; sourceTree = "<group>"; };
 		F8BD2A02227ED4C80021F944 /* notValid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = notValid.json; sourceTree = "<group>"; };
+		F8BD2A08227F0CB10021F944 /* RestaurantListSorting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantListSorting.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +183,7 @@
 				F8BD29ED227ECFC10021F944 /* ListTableViewController.swift */,
 				F8BD29F0227ECFC10021F944 /* RestaurantsSearchController.swift */,
 				F8BD29EF227ECFC10021F944 /* ContainerViewController.swift */,
+				F8BD2A08227F0CB10021F944 /* RestaurantListSorting.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 			files = (
 				F8BD29FF227ED23B0021F944 /* RestaurantCell.swift in Sources */,
 				F8BD29FD227ED08A0021F944 /* Parser.swift in Sources */,
+				F8BD2A09227F0CB10021F944 /* RestaurantListSorting.swift in Sources */,
 				F8BD29E9227ECF910021F944 /* SortingValues.swift in Sources */,
 				F8BD29C8227ECF6B0021F944 /* ViewController.swift in Sources */,
 				F8BD29FB227ED08A0021F944 /* RestaurantsVM.swift in Sources */,

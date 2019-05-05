@@ -10,6 +10,8 @@ import UIKit
 import SnapKit
 
 class RestaurantCell: UITableViewCell {
+    
+
     //Upper Section
     let upperView = UIView()
     let makeFavourite = UIButton()
@@ -53,7 +55,8 @@ class RestaurantCell: UITableViewCell {
         
         
         
-        makeFavourite.setBackgroundImage(UIImage(named: "full-heart"), for: .normal)
+        makeFavourite.setBackgroundImage(UIImage(named: "empty-heart"), for: .normal)
+        makeFavourite.setBackgroundImage(UIImage(named: "full-heart"), for: .selected)
         openStateLabel.text = "Status:"
 
         selectedSortLabel.text = "Popularity:"
