@@ -18,8 +18,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="avW-CO-VKH">
+                                <rect key="frame" x="4" y="88" width="406" height="33"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="lVD-NU-ONx"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="First"/>
+                                    <segment title="Second"/>
+                                </segments>
+                                <connections>
+                                    <action selector="sortingCriteriaSelected:" destination="SuJ-U1-veO" eventType="valueChanged" id="cvK-aS-HX8"/>
+                                </connections>
+                            </segmentedControl>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="icc-a3-xK5">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="4" y="128" width="406" height="734"/>
                                 <connections>
                                     <segue destination="xRW-kG-cas" kind="embed" id="RIk-wQ-McV"/>
                                 </connections>
@@ -27,14 +40,20 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="icc-a3-xK5" firstAttribute="leading" secondItem="jT3-Gm-aHR" secondAttribute="leading" id="9bm-Rz-wfG"/>
-                            <constraint firstItem="icc-a3-xK5" firstAttribute="top" secondItem="2Dh-p9-Wnq" secondAttribute="top" id="ROG-kb-iv1"/>
-                            <constraint firstItem="2Dh-p9-Wnq" firstAttribute="bottom" secondItem="icc-a3-xK5" secondAttribute="bottom" id="cO0-YY-gTD"/>
-                            <constraint firstItem="2Dh-p9-Wnq" firstAttribute="trailing" secondItem="icc-a3-xK5" secondAttribute="trailing" id="enb-nb-p34"/>
+                            <constraint firstItem="icc-a3-xK5" firstAttribute="trailing" secondItem="2Dh-p9-Wnq" secondAttribute="trailing" constant="-4" id="3S2-ch-PaN"/>
+                            <constraint firstItem="avW-CO-VKH" firstAttribute="leading" secondItem="2Dh-p9-Wnq" secondAttribute="leading" constant="4" id="LBQ-QR-y4i"/>
+                            <constraint firstItem="2Dh-p9-Wnq" firstAttribute="trailing" secondItem="avW-CO-VKH" secondAttribute="trailing" constant="4" id="YBc-w2-NE4"/>
+                            <constraint firstItem="icc-a3-xK5" firstAttribute="leading" secondItem="2Dh-p9-Wnq" secondAttribute="leading" constant="4" id="Zgm-9d-iv5"/>
+                            <constraint firstItem="icc-a3-xK5" firstAttribute="top" secondItem="avW-CO-VKH" secondAttribute="bottom" constant="8" id="s8G-Sd-cy5"/>
+                            <constraint firstItem="avW-CO-VKH" firstAttribute="top" secondItem="2Dh-p9-Wnq" secondAttribute="top" id="tnu-TC-ngp"/>
+                            <constraint firstItem="icc-a3-xK5" firstAttribute="bottom" secondItem="2Dh-p9-Wnq" secondAttribute="bottom" id="ydp-hN-FSb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2Dh-p9-Wnq"/>
                     </view>
                     <navigationItem key="navigationItem" id="a0z-bI-xDZ"/>
+                    <connections>
+                        <outlet property="sortingCriteriaSegment" destination="avW-CO-VKH" id="6gq-2v-8IV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VHB-OB-L34" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -45,15 +64,15 @@
             <objects>
                 <tableViewController id="xRW-kG-cas" customClass="ListTableViewController" customModule="Restaurants" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="15Q-9d-rpl">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
+                        <rect key="frame" x="0.0" y="0.0" width="406" height="734"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Restaurant" id="nEf-YG-IaW" customClass="RestaurantCell" customModule="Restaurants" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="406" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nEf-YG-IaW" id="vUP-Ig-a27">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="406" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>

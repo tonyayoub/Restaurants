@@ -12,8 +12,13 @@ class TableContainerViewController: UIViewController {
 
     // MARK: - Search
     let searchController = RestaurantsSearchController(searchResultsController: nil)
-    
+    var lastSearchedText = ""
   
+    @IBOutlet weak var sortingCriteriaSegment: UISegmentedControl!
+    
+    @IBAction func sortingCriteriaSelected(_ sender: UISegmentedControl) {
+        print(sender.selectedSegmentIndex)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
@@ -22,6 +27,7 @@ class TableContainerViewController: UIViewController {
     func setupSearchController() {
         self.navigationItem.titleView = searchController.searchBar
         searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.delegate = self
     }
 
     
@@ -36,4 +42,26 @@ class TableContainerViewController: UIViewController {
     }
 
 }
+
+extension TableContainerViewController: UISearchBarDelegate {
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        print("end editing")
+        searchController.searchBar.text = lastSearchedText
+    }
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        print("started editing")
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        print("canceled")
+    }
+    
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(searchText)
+        lastSearchedText = searchText
+    }
+    
+}
+
 

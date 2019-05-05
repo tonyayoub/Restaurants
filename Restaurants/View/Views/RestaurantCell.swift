@@ -55,7 +55,7 @@ class RestaurantCell: UITableViewCell {
         
         makeFavourite.setBackgroundImage(UIImage(named: "full-heart"), for: .normal)
         openStateLabel.text = "Status:"
-        print(openStateLabel.font.pointSize)
+
         selectedSortLabel.text = "Popularity:"
         self.contentView.addSubview(upperView)
         upperView.addSubview(makeFavourite)

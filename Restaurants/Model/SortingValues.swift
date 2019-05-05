@@ -17,3 +17,14 @@ struct SortingValues: Codable {
     var deliveryCosts: Int = 0
     var minCost: Int = 0
 }
+
+enum SortingCriteria {
+    case bestMatch
+    case newest
+    case ratingAverage
+    case distance
+    case popularity
+    case averageProductPrice
+    case deliveryCosts
+    case minCost
+}

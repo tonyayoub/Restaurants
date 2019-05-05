@@ -28,10 +28,8 @@ class ListTableViewController: UITableViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? RestaurantDetailsViewController
         }
-        self.navigationController
         setup()
         searchController.searchResultsUpdater = self
-        searchController.delegate = self
     }
     @objc
     func insertNewObject(_ sender: Any) {
@@ -89,7 +87,6 @@ class ListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Restaurant", for: indexPath) as! RestaurantCell
         cell.makeFavourite.tag = indexPath.row
-        print("cell tag is: \(cell.tag)")
         cell.makeFavourite.addTarget(self, action: #selector(makeFavourite(_:)), for: .touchUpInside)
         let restaurant = searchActive ? searchResults[indexPath.row] : vm.restaurants[indexPath.row]
   
@@ -123,11 +120,7 @@ extension ListTableViewController: UISearchResultsUpdating {
     }
 }
 
-extension ListTableViewController: UISearchControllerDelegate {
-    func didDismissSearchController(_ searchController: UISearchController) {
-        print("dismissed")
-    }
-}
+
 
 
 
