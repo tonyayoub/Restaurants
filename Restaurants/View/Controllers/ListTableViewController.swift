@@ -44,16 +44,7 @@ class ListTableViewController: UITableViewController {
     
     @objc
     func makeFavourite(_ sender: UIButton) {
-        let restName = vm.displayedResults[sender.tag].name
-        if vm.favourites.contains(restName) {
-            if let index = vm.favourites.firstIndex(of: restName) {
-                vm.favourites.remove(at: index)
-            }
-        }
-        else {
-            vm.favourites.append(restName)
-        }
-        tableView.reloadData()
+        sender.isSelected = vm.toggleFavouriteValue(rest: vm.displayedResults[sender.tag])
     }
     
     
@@ -103,7 +94,7 @@ class ListTableViewController: UITableViewController {
         
         let restaurant = vm.displayedResults[indexPath.row]
         cell.textLabel!.text = restaurant.name
-        cell.makeFavourite.isSelected = vm.favourites.contains(restaurant.name)
+        cell.makeFavourite.isSelected = vm.isFavourite(rest: restaurant)
         return cell
     }
     

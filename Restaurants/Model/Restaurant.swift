@@ -7,7 +7,9 @@
 //
 
 import Foundation
-struct Restaurant: Codable {
+import RealmSwift
+
+class Restaurant: Codable {
     var name: String = ""
     var status: String = ""
     var sortingValues: SortingValues = SortingValues()
@@ -22,4 +24,12 @@ struct Restaurant: Codable {
 
 struct RestaurantList: Codable {
     var restaurants: [Restaurant]
+}
+
+class RestaurantName: Object {
+    convenience init(name: String) {
+        self.init()
+        text = name
+    }
+    @objc dynamic var text = String()
 }

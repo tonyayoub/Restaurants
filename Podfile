@@ -5,6 +5,7 @@ target 'Restaurants' do
   # Pods for Restaurants
   pod 'RxSwift'
   pod 'SnapKit'
+  pod 'RealmSwift'
 
   target 'RestaurantsTests' do
     inherit! :search_paths

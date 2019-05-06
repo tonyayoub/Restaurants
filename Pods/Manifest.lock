@@ -1,25 +1,35 @@
 PODS:
+  - Realm (3.14.2):
+    - Realm/Headers (= 3.14.2)
+  - Realm/Headers (3.14.2)
+  - RealmSwift (3.14.2):
+    - Realm (= 3.14.2)
   - RxBlocking (5.0.0):
     - RxSwift (~> 5)
   - RxSwift (5.0.0)
   - SnapKit (5.0.0)
 
 DEPENDENCIES:
+  - RealmSwift
   - RxBlocking
   - RxSwift
   - SnapKit
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Realm
+    - RealmSwift
     - RxBlocking
     - RxSwift
     - SnapKit
 
 SPEC CHECKSUMS:
+  Realm: 179c6706e3a49dbfe112e572fd3c03d3169bea35
+  RealmSwift: 1797f272fb51c555b764fada32e82159a2c65247
   RxBlocking: c67185d26498ea3cbe3e121917c3c16739e43123
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
 
-PODFILE CHECKSUM: fed76d0aa1277f219e9cfdfa1794a6c64f927892
+PODFILE CHECKSUM: 4e9a01ea6dff92c20f4af76559aa78832e2a8e03
 
 COCOAPODS: 1.5.3
