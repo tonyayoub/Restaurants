@@ -148,7 +148,6 @@
 				F8BD29EA227ECFA30021F944 /* View */,
 				F8BD29C5227ECF6B0021F944 /* AppDelegate.swift */,
 				F8BD29C7227ECF6B0021F944 /* ViewController.swift */,
-				F8BD29C9227ECF6B0021F944 /* Main.storyboard */,
 				F8BD29CC227ECF6C0021F944 /* Assets.xcassets */,
 				F8BD29CE227ECF6C0021F944 /* LaunchScreen.storyboard */,
 				F8BD29D1227ECF6C0021F944 /* Info.plist */,
@@ -203,6 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				F8BD29FE227ED23B0021F944 /* RestaurantCell.swift */,
+				F8BD29C9227ECF6B0021F944 /* Main.storyboard */,
 			);
 			path = Views;
 			sourceTree = "<group>";

@@ -64,11 +64,11 @@ class ListTableViewController: UITableViewController {
     
     func setup() {
         setupTableView()
-        vm.favSubject.subscribe(onNext: { (favListLoaded) in
+        vm.displayOptionsChanged.subscribe(onNext: { (favListLoaded) in
             if favListLoaded {
                 DispatchQueue.main.async {
                     //[_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-                    self.tableView.reloadSections(IndexSet(integer: 0), with: UITableView.RowAnimation.fade)
+                    self.tableView.reloadSections(IndexSet(integer: 0), with: UITableView.RowAnimation.none)
                     //self.tableView.reloadData()
                 }
             }
@@ -118,6 +118,9 @@ class ListTableViewController: UITableViewController {
         let restaurant = disp[indexPath.row]
         cell.textLabel!.text = restaurant.name
         cell.openStateValue.text = restaurant.status
+        cell.selectedSortLabel.text = DisplayOptions.shared.selectedCriteria.rawValue + ":"
+
+        cell.selectedSortValue.text = String(restaurant.getSortingValueFromCriteria(criteria: DisplayOptions.shared.selectedCriteria))
         cell.makeFavourite.isSelected = vm.isFavourite(rest: restaurant)
         return cell
     }
@@ -147,10 +150,8 @@ extension ListTableViewController: UISearchResultsUpdating {
 
 extension ListTableViewController: RestaurantListSorting {
     func handleSortingCriteriaChanged(selectedCriteria: SortingCriteria) {
-        vm.sortDisplayedResults(criteria: selectedCriteria)
-            .subscribe(onNext: { (isSorted) in
-                self.tableView.reloadData()
-            }).disposed(by: bag)
+        DisplayOptions.shared.selectedCriteria = selectedCriteria
+        vm.publishNewDisplayOptions()
     }
     
     

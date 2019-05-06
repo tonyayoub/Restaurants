@@ -69,12 +69,13 @@ class RestaurantCell: UITableViewCell {
         
         lowerLeft.addSubview(openStateLabel)
         lowerLeft.addSubview(openStateValue)
+        openStateLabel.textAlignment = .right
         
         lowerRight.addSubview(selectedSortLabel)
         lowerRight.addSubview(selectedSortValue)
+        selectedSortLabel.textAlignment = .right
         
         
-        openStateLabel.adjustsFontSizeToFitWidth = true
 
     }
     func adjustLayout() {
@@ -118,7 +119,7 @@ class RestaurantCell: UITableViewCell {
         
         self.openStateLabel.snp.makeConstraints { (make) in
             make.left.top.bottom.equalTo(lowerLeft)
-            make.width.equalTo(lowerLeft).multipliedBy(0.2)
+            make.width.equalTo(lowerLeft).multipliedBy(0.4)
         }
         
         self.openStateValue.snp.makeConstraints { (make) in
@@ -134,7 +135,12 @@ class RestaurantCell: UITableViewCell {
         
         self.selectedSortLabel.snp.makeConstraints { (make) in
             make.left.top.bottom.equalTo(lowerRight)
-            make.width.equalTo(lowerView).multipliedBy(0.5)
+            make.width.equalTo(lowerRight).multipliedBy(0.5)
+        }
+        
+        self.selectedSortValue.snp.makeConstraints { (make) in
+            make.right.top.bottom.equalTo(lowerRight)
+            make.left.equalTo(selectedSortLabel.snp.right)
         }
         
     }

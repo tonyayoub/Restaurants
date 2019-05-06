@@ -38,46 +38,16 @@ extension Restaurant {
         else {
             return ComparisonResult.orderedSame
         }
-
-        
-        
     }
     
     static func criteriaCompare(r1: Restaurant, r2: Restaurant) -> ComparisonResult {
-        var rest1Value: Float = 0.0
-        var rest2Value: Float = 0.0
-        let criteria = SortingCriteria.bestMatch
-        switch criteria {
-        case .averageProductPrice:
-            rest1Value = Float(r1.sortingValues.averageProductPrice)
-            rest2Value = Float(r2.sortingValues.averageProductPrice)
-        case .bestMatch:
-            rest1Value = Float(r1.sortingValues.bestMatch)
-            rest2Value = Float(r2.sortingValues.bestMatch)
-        case .deliveryCosts:
-            rest1Value = Float(r1.sortingValues.deliveryCosts)
-            rest2Value = Float(r2.sortingValues.deliveryCosts)
-        case .distance:
-            rest1Value = Float(r1.sortingValues.distance)
-            rest2Value = Float(r2.sortingValues.distance)
-        case .minCost:
-            rest1Value = Float(r1.sortingValues.minCost)
-            rest2Value = Float(r2.sortingValues.minCost)
-        case .newest:
-            rest1Value = Float(r1.sortingValues.newest)
-            rest2Value = Float(r2.sortingValues.newest)
-        case .popularity:
-            rest1Value = Float(r1.sortingValues.popularity)
-            rest2Value = Float(r2.sortingValues.popularity)
-        case .ratingAverage:
-            rest1Value = Float(r1.sortingValues.ratingAverage)
-            rest2Value = Float(r2.sortingValues.ratingAverage)
-
-        }
-        if rest1Value > rest2Value { //assuming the bigger number is better for all criteria.
+        let criteria = DisplayOptions.shared.selectedCriteria
+        let rest1ComparisonValue = r1.getSortingValueFromCriteria(criteria: criteria)
+        let rest2ComparisonValue = r2.getSortingValueFromCriteria(criteria: criteria)
+        if rest1ComparisonValue > rest2ComparisonValue { //assuming the bigger number is better for all criteria.
             return ComparisonResult.orderedAscending
         }
-        else if rest2Value < rest1Value {
+        else if rest2ComparisonValue < rest1ComparisonValue {
             return ComparisonResult.orderedDescending
         }
         else {

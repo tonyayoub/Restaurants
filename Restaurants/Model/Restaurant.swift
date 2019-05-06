@@ -13,12 +13,33 @@ class Restaurant: Codable {
     var name: String = ""
     var status: String = ""
     var sortingValues: SortingValues = SortingValues()
-    
+    func getSortingValueFromCriteria(criteria: SortingCriteria) -> Float {
+        switch criteria {
+        case .averageProductPrice:
+            return Float(sortingValues.averageProductPrice)
+        case .bestMatch:
+            return Float(sortingValues.bestMatch)
+        case .deliveryCosts:
+            return Float(sortingValues.deliveryCosts)
+        case .distance:
+            return Float(sortingValues.distance)
+        case .minCost:
+            return Float(sortingValues.minCost)
+        case .newest:
+            return Float(sortingValues.newest)
+        case .popularity:
+            return Float(sortingValues.popularity)
+        case .ratingAverage:
+            return Float(sortingValues.ratingAverage)
+        }
+    }
     enum CodingKeys: String, CodingKey {
         case name
         case status
         case sortingValues
     }
+    
+    
 }
 
 struct RestaurantList: Codable {

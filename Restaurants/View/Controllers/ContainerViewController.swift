@@ -58,24 +58,15 @@ class ContainerViewController: UIViewController {
         }
     }
     
-    @IBAction func ShowSortOptions(_ sender: Any) {
-        print("sorting options")
-    }
+
 
 }
 
 extension ContainerViewController: UISearchBarDelegate {
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        print("end editing")
         searchController.searchBar.text = lastSearchedText
     }
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        print("started editing")
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        print("canceled")
-    }
+
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
