@@ -27,6 +27,7 @@ class ListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.vm.parseRestaurants()
+        self.vm.loadFavouriteList()
         setup()
         searchController.searchResultsUpdater = self
     }
@@ -44,14 +45,35 @@ class ListTableViewController: UITableViewController {
     
     @objc
     func makeFavourite(_ sender: UIButton) {
-        sender.isSelected = vm.toggleFavouriteValue(rest: vm.displayedResults[sender.tag])
+        let rest = vm.displayedResults[sender.tag]
+        UIView.animate(withDuration: 0.1, animations: {
+            sender.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        }) { (_) in
+            sender.transform = CGAffineTransform.identity
+            if self.vm.isFavourite(rest: rest) {
+                self.vm.removeFromFavourites(rest: rest)
+            }
+            else {
+                self.vm.addToFavourites(rest: rest)
+            }
+        }
+
     }
     
+
     
     func setup() {
         setupTableView()
-
-        
+        vm.favSubject.subscribe(onNext: { (favListLoaded) in
+            if favListLoaded {
+                DispatchQueue.main.async {
+                    //[_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+                    self.tableView.reloadSections(IndexSet(integer: 0), with: UITableView.RowAnimation.fade)
+                    //self.tableView.reloadData()
+                }
+            }
+        })
+        .disposed(by: bag)
     }
     
     
@@ -90,10 +112,12 @@ class ListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Restaurant", for: indexPath) as! RestaurantCell
         cell.makeFavourite.tag = indexPath.row
-        cell.makeFavourite.addTarget(self, action: #selector(makeFavourite(_:)), for: .touchUpInside)
         
-        let restaurant = vm.displayedResults[indexPath.row]
+        cell.makeFavourite.addTarget(self, action: #selector(makeFavourite(_:)), for: .touchUpInside)
+        let disp = vm.displayedResults
+        let restaurant = disp[indexPath.row]
         cell.textLabel!.text = restaurant.name
+        cell.openStateValue.text = restaurant.status
         cell.makeFavourite.isSelected = vm.isFavourite(rest: restaurant)
         return cell
     }

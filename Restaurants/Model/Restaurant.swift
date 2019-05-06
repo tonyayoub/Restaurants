@@ -13,7 +13,6 @@ class Restaurant: Codable {
     var name: String = ""
     var status: String = ""
     var sortingValues: SortingValues = SortingValues()
-    var favourite: Bool = false
     
     enum CodingKeys: String, CodingKey {
         case name
@@ -26,6 +25,7 @@ struct RestaurantList: Codable {
     var restaurants: [Restaurant]
 }
 
+//to be used with Realm
 class RestaurantName: Object {
     convenience init(name: String) {
         self.init()

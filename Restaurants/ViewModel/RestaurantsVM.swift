@@ -15,15 +15,23 @@ class RestaurantsVM {
     var db = DBAdaptor()
     private var restaurants = [Restaurant]()
     private var filteredResults = [Restaurant]()
+    var favSubject: BehaviorSubject<Bool> = BehaviorSubject(value: false)
 
     var searchString = ""
     var sortCriteria: SortingCriteria = .bestMatch
+    var displayedResults2: [Restaurant] {
+        let res = filteredResults.sorted(by: { (rest1, rest2) -> Bool in
+            RestaurantSorter.compare(rest1, rest2, DisplayOptions.shared.favouriteList)
+        })
+        return res
+    }
     var displayedResults: [Restaurant] {
-        return filteredResults
+        let res = filteredResults.sorted(by: Restaurant.statusCompare, Restaurant.favCompare, Restaurant.criteriaCompare)
+        return res
     }
     
 
-    func  parseRestaurants(){
+    func  parseRestaurants() {
         let parser = Parser()
         let event = parser.readJSONFromFile(fileName: "restaurants")
         event.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default)).subscribe(onSuccess: { (result) in
@@ -34,17 +42,29 @@ class RestaurantsVM {
         }) { (error) in
             print("error parsing file")
             print(parser.status)
-            }.disposed(by: bag)
+            }
+            .disposed(by: bag)
     }
+    
+
+    
     
     func loadFavouriteList() {
         
+        let event = db.loadFavouriteList()
+        event.subscribe(onSuccess: { (result) in
+            DisplayOptions.shared.favouriteList = result
+            self.favSubject.onNext(true)
+        }) { (error) in
+            print(error)
+        }
+        .disposed(by: bag)
+        
+
     }
 
 
-    func changeIsFavourite(restaurant: inout Restaurant, makeIt isFavourite: Bool) {
-        restaurant.favourite = isFavourite
-    }
+ 
     
     
     func resetDisplayedResults() {
@@ -82,12 +102,13 @@ class RestaurantsVM {
 //        else {
 //            print("Warning: attempting to add an already-existing item to favourites")
 //        }
-        db.addItem(restName: rest.name)
+        db.addToFavourites(restName: rest.name)
+        loadFavouriteList()
     }
     
     func isFavourite(rest: Restaurant) -> Bool {
         //return favourites.list.contains(rest.name)
-        return db.checkItemExists(restName: rest.name)
+        return db.checkIfFavourite(restName: rest.name)
     }
     
     func removeFromFavourites(rest: Restaurant) {
@@ -97,7 +118,8 @@ class RestaurantsVM {
 //        else {
 //            print("Warning: attempting to remove a non-existing item from favourites")
 //        }
-        db.deleteItem(restName: rest.name)
+        db.removeFromFavourites(restName: rest.name)
+        loadFavouriteList()
     }
     
     // The returning value represents the final state of the item
@@ -110,6 +132,8 @@ class RestaurantsVM {
 //            addToFavourites(rest: rest)
 //            return true
 //        }
-        return db.toggleItemStatus(restName: rest.name)
+        let res = db.toggleBeingFavourite(restName: rest.name)
+        loadFavouriteList()
+        return res
     }
 }

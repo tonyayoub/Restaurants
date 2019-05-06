@@ -11,3 +11,9 @@ enum ParsingError: Error {
     case fileNotFound
     case invalidDataFile
 }
+
+enum DBError: Error {
+    case favouritesLoadingError
+    case cannotAddToFavourites
+    case cannotRemoveFromFavourites
+}

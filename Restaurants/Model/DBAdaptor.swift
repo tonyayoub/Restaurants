@@ -8,14 +8,43 @@
 
 import Foundation
 import RealmSwift
+import RxSwift
+
+enum DBStatus {
+    case OK
+    case Error
+}
 
 class DBAdaptor {
     var realm: Realm?
+    var status: DBStatus = .OK
     init() {
         realm = try? Realm()
     }
-    func loadSavedData() -> [RestaurantName] {
-        var res = [RestaurantName]()
+    
+    func loadFavouriteList() -> Single<[String]> {
+        return Single<[String]>.create { single in
+            if let realm = try? Realm() {
+                var res = [String]()
+                for result in realm.objects(RestaurantName.self) {
+                    res.append(result.text)
+                }
+                self.status = .OK
+                single(.success(res))
+            }
+            else {
+                print("Failed to create a Realm object")
+                self.status = .Error
+                single(.error(DBError.favouritesLoadingError))
+            }
+            return Disposables.create()
+        }
+    }
+
+    
+    
+    func loadFavouriteList2() -> [String] {
+        var res = [String]()
         
         guard let realm = try? Realm() else {
             print("Failed to create a Realm object")
@@ -23,12 +52,12 @@ class DBAdaptor {
         }
 
         for result in realm.objects(RestaurantName.self) {
-            res.append(result)
+            res.append(result.text)
         }
         return res
     }
     
-    func addItem(restName: String) {
+    func addToFavourites(restName: String) {
         let restName = RestaurantName(name: restName)
         guard let realm = try? Realm() else {
             print("Failed to create a Realm object")
@@ -43,7 +72,7 @@ class DBAdaptor {
         }
     }
     
-    func deleteItem(restName: String) {
+    func removeFromFavourites(restName: String) {
         guard let realm = self.realm else {
             return
         }
@@ -57,7 +86,7 @@ class DBAdaptor {
         }
     }
     
-    func checkItemExists(restName: String) -> Bool {
+    func checkIfFavourite(restName: String) -> Bool {
         guard let realm = self.realm else {
             return false
         }
@@ -65,17 +94,17 @@ class DBAdaptor {
         return checkedItem.count > 0
     }
     
-    func toggleItemStatus(restName: String) -> Bool {
+    func toggleBeingFavourite(restName: String) -> Bool {
         guard let realm = self.realm else {
             return false
         }
         let checkedItem = realm.objects(RestaurantName.self).filter("text = %@", restName)
         if checkedItem.count > 0 {
-            deleteItem(restName: restName)
+            removeFromFavourites(restName: restName)
             return false
         }
         else {
-            addItem(restName: restName)
+            addToFavourites(restName: restName)
             return true
         }
     }
