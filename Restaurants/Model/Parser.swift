@@ -20,11 +20,12 @@ class Parser {
     
     func readJSONFromFile(fileName: String) -> Single<[Restaurant]> {
         return Single<[Restaurant]>.create { single in
-//            sleep(5)
             let bundle = Bundle(for: Parser.self)
             if let path = bundle.path(forResource: fileName, ofType: "json") {
                 let fileUrl = URL(fileURLWithPath: path)
                 do {
+                    //simulate slow parsing
+//                    sleep(5)
                     let data = try Data(contentsOf: fileUrl, options: .mappedIfSafe)
                     let restList = try JSONDecoder().decode(RestaurantList.self, from: data)
                     self.status = .Success
@@ -42,7 +43,4 @@ class Parser {
             return Disposables.create()
         }
     }
-
-    
-    
 }

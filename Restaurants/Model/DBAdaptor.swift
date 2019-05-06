@@ -43,19 +43,7 @@ class DBAdaptor {
 
     
     
-    func loadFavouriteList2() -> [String] {
-        var res = [String]()
-        
-        guard let realm = try? Realm() else {
-            print("Failed to create a Realm object")
-            return res
-        }
 
-        for result in realm.objects(RestaurantName.self) {
-            res.append(result.text)
-        }
-        return res
-    }
     
     func addToFavourites(restName: String) {
         let restName = RestaurantName(name: restName)

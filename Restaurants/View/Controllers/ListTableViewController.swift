@@ -14,7 +14,6 @@ class ListTableViewController: UITableViewController {
     let vm = RestaurantsVM()
     var sortCriteriaSubject = BehaviorSubject(value: SortingCriteria.bestMatch)
     let bag = DisposeBag()
-    
     var searchController: RestaurantsSearchController!
     
     var searchActive: Bool {
@@ -60,10 +59,16 @@ class ListTableViewController: UITableViewController {
 
     }
     
-
-    
     func setup() {
         setupTableView()
+        
+        vm.restaurantsListReady.subscribe(onNext: { (listReady) in
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        })
+        .disposed(by: bag)
+        
         vm.displayOptionsChanged.subscribe(onNext: { (favListLoaded) in
             if favListLoaded {
                 DispatchQueue.main.async {
@@ -74,29 +79,13 @@ class ListTableViewController: UITableViewController {
             }
         })
         .disposed(by: bag)
+        
+        
     }
-    
     
     func setupTableView() {
         tableView.register(RestaurantCell.self, forCellReuseIdentifier: "Restaurant")
         tableView.reloadData()
-    }
-
-
-
-
-    // MARK: - Segues
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetail" {
-//            if let indexPath = tableView.indexPathForSelectedRow {
-//              //  let object = objects[indexPath.row] as! NSDate
-//                let controller = (segue.destination as! UINavigationController).topViewController as! RestaurantDetailsViewController
-//              //  controller.detailItem = object
-//                controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-//                controller.navigationItem.leftItemsSupplementBackButton = true
-//            }
-        }
     }
 
     // MARK: - Table View
@@ -124,11 +113,7 @@ class ListTableViewController: UITableViewController {
         cell.makeFavourite.isSelected = vm.isFavourite(rest: restaurant)
         return cell
     }
-    
-
 }
-
-
 
 extension ListTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
@@ -138,6 +123,7 @@ extension ListTableViewController: UISearchResultsUpdating {
             tableView.reloadData()
         }
     }
+    
     func filterContent(for searchString: String) {
         if !searchActive {
             vm.resetDisplayedResults()
@@ -153,8 +139,6 @@ extension ListTableViewController: RestaurantListSorting {
         DisplayOptions.shared.selectedCriteria = selectedCriteria
         vm.publishNewDisplayOptions()
     }
-    
-    
 }
 
 

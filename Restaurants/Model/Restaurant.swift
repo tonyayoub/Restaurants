@@ -38,8 +38,6 @@ class Restaurant: Codable {
         case status
         case sortingValues
     }
-    
-    
 }
 
 struct RestaurantList: Codable {

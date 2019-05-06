@@ -8,6 +8,7 @@
 
 import Foundation
 class DisplayOptions {
+    //Singleton
     static let shared = DisplayOptions()
     private init() {
         

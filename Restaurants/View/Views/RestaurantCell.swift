@@ -73,16 +73,14 @@ class RestaurantCell: UITableViewCell {
         
         lowerRight.addSubview(selectedSortLabel)
         lowerRight.addSubview(selectedSortValue)
-        selectedSortLabel.textAlignment = .right
+        selectedSortLabel.textAlignment = .left
+        selectedSortValue.textAlignment = .left
         
         
 
     }
     func adjustLayout() {
         
-        guard let textLabel = textLabel else {
-            return
-        }
         self.contentView.snp.makeConstraints { (make) in
             make.left.top.right.bottom.equalTo(self)
         }
@@ -92,7 +90,7 @@ class RestaurantCell: UITableViewCell {
             make.height.equalTo(self.contentView).multipliedBy(0.5)
         }
         
-        textLabel.snp.makeConstraints({ (make) in
+        textLabel!.snp.makeConstraints({ (make) in
             make.left.top.bottom.equalTo(upperView)
             make.width.equalTo(upperView).multipliedBy(0.7)
         })
